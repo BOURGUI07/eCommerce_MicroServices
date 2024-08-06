@@ -7,9 +7,10 @@ services:
     environment:
       POSTGRES_USER: springstudent
       POSTGRES_PASSWORD: springstudent
-      PGDATA: /data/postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -20,8 +21,8 @@ services:
     container_name: ms_pgadmin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
       - pgadmin:/var/lib/pgadmin
@@ -45,10 +46,12 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongo:/data
+      - mongo:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=springstudent
       - MONGO_INITDB_ROOT_PASSWORD=springstudent
+    networks:
+      - microservices-net
 
   mongo-express:
     image: mongo-express
@@ -60,6 +63,8 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=springstudent
       - ME_CONFIG_MONGODB_ADMINPASSWORD=springstudent
       - ME_CONFIG_MONGODB_SERVER=mongodb
+    networks:
+      - microservices-net
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -96,6 +101,8 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+    networks:
+      - microservices-net
 
 networks:
   microservices-net:
@@ -105,6 +112,7 @@ volumes:
   postgres:
   pgadmin:
   mongo:
+
 
 
 
