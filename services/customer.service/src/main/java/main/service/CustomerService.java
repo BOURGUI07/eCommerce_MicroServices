@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import main.dtos.CustomerRequest;
 import main.dtos.CustomerResponse;
 import main.exception.CustomerNotFoundException;
-import main.model.Customer;
 import main.repo.CustomerRepo;
 import main.util.CustomerMapper;
 import org.springframework.stereotype.Service;
