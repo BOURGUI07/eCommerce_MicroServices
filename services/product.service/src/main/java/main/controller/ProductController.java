@@ -36,7 +36,7 @@ public class ProductController {
     private final ProductService service;
     
     @PostMapping
-    public ResponseEntity<Integer> createCustomer(@RequestBody @Valid ProductRequest customer){
+    public ResponseEntity<Integer> createProduct(@RequestBody @Valid ProductRequest customer){
         var id = service.create(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
@@ -49,7 +49,7 @@ public class ProductController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomer(
+    public ResponseEntity<?> updateProduct(
             @PathVariable Integer id,
             @Valid @RequestBody ProductRequest x){
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -71,7 +71,7 @@ public class ProductController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Integer id){
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
